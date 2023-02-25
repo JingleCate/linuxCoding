@@ -61,6 +61,12 @@ build CMakeFiles/BaseTest.dir/sources/fd.cpp.o: CXX_COMPILER__BaseTest_Debug /ho
   OBJECT_DIR = CMakeFiles/BaseTest.dir
   OBJECT_FILE_DIR = CMakeFiles/BaseTest.dir/sources
 
+build CMakeFiles/BaseTest.dir/sources/proc.cpp.o: CXX_COMPILER__BaseTest_Debug /home/master/ProgramFiles/ClionProjects/BaseTest/sources/proc.cpp || cmake_object_order_depends_target_BaseTest
+  DEP_FILE = CMakeFiles/BaseTest.dir/sources/proc.cpp.o.d
+  FLAGS = -g -fdiagnostics-color=always
+  OBJECT_DIR = CMakeFiles/BaseTest.dir
+  OBJECT_FILE_DIR = CMakeFiles/BaseTest.dir/sources
+
 
 # =============================================================================
 # Link build statements for EXECUTABLE target BaseTest
@@ -69,7 +75,7 @@ build CMakeFiles/BaseTest.dir/sources/fd.cpp.o: CXX_COMPILER__BaseTest_Debug /ho
 #############################################
 # Link the executable BaseTest
 
-build BaseTest: CXX_EXECUTABLE_LINKER__BaseTest_Debug CMakeFiles/BaseTest.dir/main.cpp.o CMakeFiles/BaseTest.dir/sources/fd.cpp.o
+build BaseTest: CXX_EXECUTABLE_LINKER__BaseTest_Debug CMakeFiles/BaseTest.dir/main.cpp.o CMakeFiles/BaseTest.dir/sources/fd.cpp.o CMakeFiles/BaseTest.dir/sources/proc.cpp.o
   FLAGS = -g
   OBJECT_DIR = CMakeFiles/BaseTest.dir
   POST_BUILD = :
