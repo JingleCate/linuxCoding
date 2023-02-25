@@ -119,6 +119,7 @@ void dirTest() {
             std::cout << "Reading dest dir finished." << std::endl;
             break;
         }
+        // 忽略当前文件夹和上级文件夹
         if (strcmp(ptr->d_name, ".") == 0 ||
             strcmp(ptr->d_name, "..") == 0) {
             continue;
@@ -151,6 +152,7 @@ void dirTest() {
         count++;
     }
     std::cout << "Total: " << count << std::endl;
+    closedir(dirp);
 
     std::cout << "*****************************************************" << std::endl;
 }
