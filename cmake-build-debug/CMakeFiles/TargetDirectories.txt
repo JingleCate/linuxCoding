@@ -1,0 +1,3 @@
+/home/master/ProgramFiles/ClionProjects/BaseTest/cmake-build-debug/CMakeFiles/BaseTest.dir
+/home/master/ProgramFiles/ClionProjects/BaseTest/cmake-build-debug/CMakeFiles/edit_cache.dir
+/home/master/ProgramFiles/ClionProjects/BaseTest/cmake-build-debug/CMakeFiles/rebuild_cache.dir
