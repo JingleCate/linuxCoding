@@ -16,5 +16,6 @@ int loop_proc_recursion(int n);
 int loop_proc_nore(int n);
 int execute(const char *path);
 void orphanProc();
+void pipeProc();
 
 #endif //BASETEST_PROC_H

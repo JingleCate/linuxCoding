@@ -8,6 +8,8 @@
 #include <unistd.h>
 #include "include/proc.h"
 #include <iostream>
+#include <cstring>
+#include <sys/wait.h>
 
 /**
  * Get current and parent proc id <- task_struct in Linux.
@@ -115,6 +117,7 @@ int loop_proc_nore(int n) {
     // std::cout << "Total child proc: " << count;
     return count;
 }
+
 /**
  *  需要通过现在运行的进程启动磁盘上的另一个可执行程序，也就是通过一个进程启动另一个进程，
  * 这种情况下我们可以使用exec族函数.exec族函数并没有创建新进程的能力，只是有大无畏的牺牲精神，
@@ -124,10 +127,10 @@ int loop_proc_nore(int n) {
  */
 int execute(const char *path) {
     int pid = fork();
-    if(pid < 0){
+    if (pid < 0) {
         std::cerr << "Creating proc failed.";
         return -1;
-    } else if(pid == 0){
+    } else if (pid == 0) {
         // NULL 表示参数结束
         execl(path, "title", "aux", NULL);
         // 如果成功当前子进程的代码区别 ps中的代码区代码替换
@@ -136,7 +139,7 @@ int execute(const char *path) {
         perror("execl");
         printf("++++++++++++++++++++++++\n");
         printf("++++++++++++++++++++++++\n");
-    } else if(pid > 0){
+    } else if (pid > 0) {
         std::cout << "Finished!" << std::endl;
     }
     // execl(path, "title", "aux");
@@ -146,23 +149,56 @@ int execute(const char *path) {
 /**
  * 孤儿进程
  */
-void orphanProc(){
+void orphanProc() {
     // 创建子进程
     pid_t pid = fork();
 
     // 父进程
-    if(pid > 0)
-    {
+    if (pid > 0) {
         printf("我是父进程, pid=%d\n", getpid());
-    }
-    else if(pid == 0)
-    {
+    } else if (pid == 0) {
         //TODO Clion 中子进程直接结束不托管
-        sleep(1);	// 强迫子进程睡眠1s, 这个期间, 父进程退出, 当前进程变成了孤儿进程
+        sleep(1);    // 强迫子进程睡眠1s, 这个期间, 父进程退出, 当前进程变成了孤儿进程
         // 子进程
         printf("我是子进程, pid=%d, 父进程ID: %d\n", getpid(), getppid());
-    } else if(pid == -1){
+    } else if (pid == -1) {
         std::cerr << "Creating proc failed.";
+    }
+}
+
+/**
+ * Test procs pipe communication
+ * None name pipe   无名管道
+ */
+void pipeProc() {
+    // B -> A 管道通信，B写A读
+    int fd[2];
+    int ret = pipe(fd);
+    if (ret == -1) {
+        std::cerr << "Create pipe error." << std::endl;
+        exit(0);
+    }
+    // 创建 child proc
+    int pid = fork();
+    if (pid == 0) {
+        close(fd[0]);               // Close read fd
+        dup2(fd[1], STDOUT_FILENO);     // 进程打印数据默认输出到终端, 终端对应的文件描述符: stdout_fileno
+        execlp("ps", "ps", "aux", NULL);
+        perror("execlp");
+    } else if (pid > 0) {
+        close(fd[1]);               // Close write fd
+        char buffer[4096];             // kernel size 4k
+        std::cout << "Buffer: \n";
+        while(true){
+            memset(buffer, 0, sizeof(buffer));      // Initial
+            int len =read(fd[0], buffer, sizeof(buffer));
+            if(len == 0){
+                break;
+            }
+            std::cout << buffer;
+        }
+        close(fd[0]);
+        wait(NULL);             // collect child resource
     }
 }
 
