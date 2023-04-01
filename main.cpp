@@ -1,6 +1,7 @@
 #include <iostream>
 #include "sources/include/fd.h"
 #include "sources/include/proc.h"
+#include "sources/include/socket.h"
 
 
 
@@ -20,6 +21,9 @@ int main(int argc, char *args[]) {
     // std::cout << count;
 
     // execute("/bin/ps");
-    orphanProc();
+    // orphanProc();
+    // server();
+    // client();
+    pipeProc();
     return 0;
 }

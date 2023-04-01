@@ -167,7 +167,7 @@ void orphanProc() {
 }
 
 /**
- * Test procs pipe communication
+ * @Description Test procs pipe communication
  * None name pipe   无名管道
  */
 void pipeProc() {

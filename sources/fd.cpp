@@ -104,7 +104,7 @@ void fdTest1() {
 void dirTest() {
     std::cout << "*****************************************************" << std::endl;
     DIR *dirp = opendir(TEST_DIR_PATH);
-    if (dirp == NULL) {
+    if (dirp == nullptr) {
         std::cerr << "Open dest dir failed. Exit with code 0." << std::endl;
         exit(0);
     }
@@ -115,7 +115,7 @@ void dirTest() {
     int count = 0;
     while (true) {
         dirent *ptr = readdir(dirp);
-        if (ptr == NULL) {
+        if (ptr == nullptr) {
             std::cout << "Reading dest dir finished." << std::endl;
             break;
         }
