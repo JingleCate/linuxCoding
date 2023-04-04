@@ -3,6 +3,8 @@
 #include "sources/include/proc.h"
 #include "sources/include/socket.h"
 
+#include "sources/include/slc.h"
+
 
 
 /**
@@ -24,6 +26,23 @@ int main(int argc, char *args[]) {
     // orphanProc();
     // server();
     // client();
-    pipeProc();
+    // pipeProc();
+    str s;
+    std::string str;
+    std::cout << "Please input str: ";
+    std::cin >> str;
+    initStr(s, str);
+    int *next = getNextArray(s);
+    printStr(s, std::string("Template str"));
+    for(int i = 1; i <= s.length; i++)
+        std::cout << "n[" << i << "]\t";
+    std::cout << std::endl;
+    for(int i = 1; i < s.length; i++)
+        std::cout << "-------|";
+    std::cout << "------\n";
+    for(int i = 1; i <= s.length; i++)
+        std::cout << "  " << next[i] << "\t";
+    std::cout << std::endl;
+
     return 0;
 }

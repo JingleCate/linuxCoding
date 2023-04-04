@@ -22,6 +22,22 @@ typedef struct{
 void initStr(str &s){
     s.length = 0;
 }
+// Initialize str
+void initStr(str &s, const std::string& str){
+    s.length = 0;
+    for(int i = 1; i < STR_MAX_SIZE && i <= str.size(); i++){
+        s.data[i] = str[i - 1];
+        s.length++;
+    }
+}
+
+// print str
+void printStr(str s, std::string name){
+    std::cout << name << ": ";
+    for(int i = 1; i <= s.length; i++)
+        std::cout << s.data[i];
+    std::cout << std::endl;
+}
 
 // 获取串长
 int getLen(str &s){
@@ -29,8 +45,23 @@ int getLen(str &s){
 }
 
 // get next 数组
-void getNextArray(str s){
+int* getNextArray(str s){
+    // create a next array with length of s.length + 1 . dump first one
+    int *next = new int[s.length + 1];
+    next[1] = 0;
+    for(int ptr = 2; ptr <=s.length; ptr++)
+        next[ptr] = 1;
+    int ptr1 = 1, ptr2 = 2;
+    int len = 1;
+    for(;len < s.length - 2; len++,ptr1++){
+        for(;ptr2 <= s.length - 1; ptr2++){
+            if(s.data[ptr2] == s.data[ptr1] && next[ptr2] == len)
+                next[ptr2 + 1] = len + 1;
+        }
+        ptr2 = len + 1;
+    }
 
+    return next;
 }
 
 /**
@@ -42,7 +73,7 @@ void getNextArray(str s){
  * - 正数为匹配位置
  * - -1为匹配失败
  */
-int KMPAlgorithm(str mainStr, str tempStr, int next[]){
+int KMPAlgorithm(str mainStr, str tempStr, const int next[]){
     int times = 0;                  // 比较次数
     int i = 1, j = 1;               // 定义主串和模式串的指针
     int m = getLen(mainStr), n = getLen(tempStr);       // 获取串长
@@ -59,6 +90,18 @@ int KMPAlgorithm(str mainStr, str tempStr, int next[]){
         return i - n;               // 返回匹配的头位置
     else                            // 匹配成功
         return -1;
+}
+
+/**
+ * TODO 朴素的暴力匹配算法
+ * @param mainStr 主串
+ * @param tempStr 模式串
+ * @return
+ * - 正数为匹配位置
+ * - -1为匹配失败
+ */
+int simpleMatch(str mainStr, str tempStr){
+    return 0;
 }
 
 #endif /* BASETEST_SLC_H */
